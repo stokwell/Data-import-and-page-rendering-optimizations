@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_14_173641) do
+ActiveRecord::Schema.define(version: 2020_10_15_101249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,22 +18,20 @@ ActiveRecord::Schema.define(version: 2020_10_14_173641) do
   create_table "buses", force: :cascade do |t|
     t.string "number"
     t.string "model"
-    t.index ["number"], name: "index_buses_on_number"
   end
 
   create_table "buses_services", force: :cascade do |t|
     t.integer "bus_id"
     t.integer "service_id"
+    t.index ["bus_id", "service_id"], name: "index_buses_services_on_bus_id_and_service_id", unique: true
   end
 
   create_table "cities", force: :cascade do |t|
     t.string "name"
-    t.index ["name"], name: "index_cities_on_name"
   end
 
   create_table "services", force: :cascade do |t|
     t.string "name"
-    t.index ["name"], name: "index_services_on_name"
   end
 
   create_table "trips", force: :cascade do |t|
@@ -43,6 +41,13 @@ ActiveRecord::Schema.define(version: 2020_10_14_173641) do
     t.integer "duration_minutes"
     t.integer "price_cents"
     t.integer "bus_id"
+    t.index ["bus_id"], name: "index_trips_on_bus_id"
+    t.index ["from_id"], name: "index_trips_on_from_id"
+    t.index ["start_time"], name: "index_trips_on_start_time"
+    t.index ["to_id"], name: "index_trips_on_to_id"
   end
 
+  add_foreign_key "trips", "buses", on_delete: :cascade
+  add_foreign_key "trips", "cities", column: "from_id", on_delete: :cascade
+  add_foreign_key "trips", "cities", column: "to_id", on_delete: :cascade
 end
