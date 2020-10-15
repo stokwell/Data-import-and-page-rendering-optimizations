@@ -10,6 +10,11 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'strong_migrations'
 gem 'oj'
 gem 'activerecord-import'
+gem 'dotenv-rails'
+gem 'newrelic_rpm'
+gem 'pghero'
+gem 'pg_query', '>= 0.9.0'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -19,7 +24,7 @@ end
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'listen', '>= 3.0.5', '< 3.2'  
 end
 
 group :test do
